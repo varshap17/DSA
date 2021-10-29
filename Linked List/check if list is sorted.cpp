@@ -24,22 +24,33 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+bool issorted(struct Node *p)
 {
-	int s=0;
-	while(p!=NULL)
+	int x=INT_MIN;
+	while(p)
 	{
-		s+=p->data;
+		if(p->data<x)
+		{
+			return false;
+		}
+		x=p->data;
 		p=p->next;
 	}
-	return s;
+	return true;
 }
 int main()
 {
 	struct Node *temp;
 	int n=5;
-	int A[]={3,6,1,9,4};
+	int A[]={3,6,11,19,24};
 	create(A,n);
-	cout<<sum(first);
+	if(issorted(first))
+	{
+		cout<<"List is sorted\n";
+	}
+	else
+	{
+		cout<<"List is not sorted\n";
+	}
 	return 0;
 }

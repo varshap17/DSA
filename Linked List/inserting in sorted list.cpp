@@ -24,22 +24,50 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+void sortedInsert(struct Node *p,int x)
 {
-	int s=0;
+	struct Node *t,*q=NULL;
+	t=new Node;
+	t->data=x;
+	t->next=NULL;
+	if(first==NULL)
+	{
+		first=t;
+	}
+	else
+	{
+		while(p && p->data<x)
+		{
+			q=p;
+			p=p->next;
+		}
+	}
+	if(p==first)
+	{
+		t->next=first;
+		first=t;
+	}
+	else
+	{
+		t->next=q->next;
+		q->next=t;
+	}
+}
+void display(struct Node *p)
+{
 	while(p!=NULL)
 	{
-		s+=p->data;
+		cout<<p->data<<" ";
 		p=p->next;
 	}
-	return s;
 }
 int main()
 {
 	struct Node *temp;
 	int n=5;
-	int A[]={3,6,1,9,4};
+	int A[]={10,20,30,40,50};
 	create(A,n);
-	cout<<sum(first);
+	sortedInsert(first,22);
+	display(first);
 	return 0;
 }

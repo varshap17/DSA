@@ -24,15 +24,36 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+void insert(int pos,int x)
 {
-	int s=0;
-	while(p!=NULL)
+	struct Node *t,*p;
+	if(pos==0)
 	{
-		s+=p->data;
-		p=p->next;
+		t=new Node;
+		t->data=x;
+		t->next=first;
+		first=t;
 	}
-	return s;
+	else if(pos>0)
+	{
+		p=first;
+		for(int i=0;i<pos && p;i++)
+		{
+			p=p->next;
+		}
+		t=new Node;
+		t->data=x;
+		t->next=p->next;
+		p->next=t;
+	}
+}
+void display(struct Node *p)
+{
+	if(p)
+	{
+		cout<<p->data<<" ";
+		display(p->next);
+	}
 }
 int main()
 {
@@ -40,6 +61,7 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	insert(3,20);
+	display(first);
 	return 0;
 }

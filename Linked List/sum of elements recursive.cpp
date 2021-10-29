@@ -26,13 +26,15 @@ void create(int A[],int n)
 }
 int sum(struct Node *p)
 {
-	int s=0;
-	while(p!=NULL)
+	if(p==0)
 	{
-		s+=p->data;
-		p=p->next;
+		return 0;
 	}
-	return s;
+    else
+	{
+		return sum(p->next)+p->data;
+	}
+	
 }
 int main()
 {

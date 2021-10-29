@@ -24,15 +24,18 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+int maxi(struct Node *p)
 {
-	int s=0;
-	while(p!=NULL)
+	int x=0;
+	if(p==0)
 	{
-		s+=p->data;
-		p=p->next;
+		return INT_MIN;
 	}
-	return s;
+	else
+	{
+		x=maxi(p->next);
+		return x>p->data?x:p->data;
+	}
 }
 int main()
 {
@@ -40,6 +43,6 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	cout<<maxi(first);
 	return 0;
 }

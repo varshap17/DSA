@@ -24,22 +24,40 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+void delduplicate(struct Node *head)
 {
-	int s=0;
+	struct Node *q=head;
+	struct Node *p=head->next;
+	while(p)
+	{
+		if(p->data!=q->data)
+		{
+			q=p;
+			p=p->next;
+		}
+		else
+		{
+			q->next=p->next;
+			delete p;
+			p=q->next;
+		}
+	}
+}
+void display(struct Node *p)
+{
 	while(p!=NULL)
 	{
-		s+=p->data;
+		cout<<p->data<<" ";
 		p=p->next;
 	}
-	return s;
 }
 int main()
 {
 	struct Node *temp;
 	int n=5;
-	int A[]={3,6,1,9,4};
+	int A[]={3,3,1,1,1};
 	create(A,n);
-	cout<<sum(first);
+	delduplicate(first);
+	display(first);
 	return 0;
 }

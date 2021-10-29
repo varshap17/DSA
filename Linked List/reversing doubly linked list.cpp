@@ -3,6 +3,7 @@ using namespace std;
 
 struct Node 
 {
+	struct Node *pre;
 	int data;
 	struct Node *next;
 }*first;
@@ -13,26 +14,40 @@ void create(int A[],int n)
 	struct Node *t,*last;
 	first=new Node;
 	first->data=A[0];
-	first->next=NULL;
+	first->pre=first->next=NULL;
 	last=first;
 	for(int i=1;i<n;i++)
 	{
 		t=new Node;
 		t->data=A[i];
-		t->next=NULL;
+		t->next=last->next;
+		t->pre=last;
 		last->next=t;
 		last=t;
 	}
 }
-int sum(struct Node *p)
+void reverse(struct Node *p)
 {
-	int s=0;
+	struct Node *temp;
+	while(p)
+	{
+		temp=p->next;
+		p->next=p->pre;
+		p->pre=temp;
+		p=p->pre;
+		if(p && p->next==NULL)
+		{
+			first=p;
+		}
+	}
+}
+void display(struct Node *p)
+{
 	while(p!=NULL)
 	{
-		s+=p->data;
+		cout<<p->data<<" ";
 		p=p->next;
 	}
-	return s;
 }
 int main()
 {
@@ -40,6 +55,7 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	reverse(first);
+	display(first);
 	return 0;
 }

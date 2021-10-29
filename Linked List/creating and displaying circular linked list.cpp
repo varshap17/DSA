@@ -13,26 +13,25 @@ void create(int A[],int n)
 	struct Node *t,*last;
 	first=new Node;
 	first->data=A[0];
-	first->next=NULL;
+	first->next=first;
 	last=first;
 	for(int i=1;i<n;i++)
 	{
 		t=new Node;
 		t->data=A[i];
-		t->next=NULL;
+		t->next=last->next;
 		last->next=t;
 		last=t;
 	}
 }
-int sum(struct Node *p)
+void display(struct Node *p)
 {
-	int s=0;
-	while(p!=NULL)
+	do
 	{
-		s+=p->data;
+		cout<<p->data<<" ";
 		p=p->next;
 	}
-	return s;
+	while(p!=first);
 }
 int main()
 {
@@ -40,6 +39,6 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	display(first);
 	return 0;
 }

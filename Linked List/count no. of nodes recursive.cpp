@@ -24,15 +24,17 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+int count(struct Node *p)
 {
-	int s=0;
-	while(p!=NULL)
+	if(p==0)
 	{
-		s+=p->data;
-		p=p->next;
+		return 0;
 	}
-	return s;
+    else
+	{
+		return count(p->next)+1;
+	}
+	
 }
 int main()
 {
@@ -40,6 +42,6 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	cout<<count(first);
 	return 0;
 }

@@ -24,15 +24,17 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+Node* search(struct Node *p,int key)
 {
-	int s=0;
-	while(p!=NULL)
+	while(p)
 	{
-		s+=p->data;
+		if(p->data==key)
+		{
+			return p;
+		}
 		p=p->next;
 	}
-	return s;
+	return NULL;
 }
 int main()
 {
@@ -40,6 +42,6 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	cout<<search(first,9);
 	return 0;
 }

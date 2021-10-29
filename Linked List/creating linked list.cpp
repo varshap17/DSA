@@ -24,15 +24,13 @@ void create(int A[],int n)
 		last=t;
 	}
 }
-int sum(struct Node *p)
+void display(struct Node *p)
 {
-	int s=0;
 	while(p!=NULL)
 	{
-		s+=p->data;
+		cout<<p->data<<" ";
 		p=p->next;
 	}
-	return s;
 }
 int main()
 {
@@ -40,6 +38,6 @@ int main()
 	int n=5;
 	int A[]={3,6,1,9,4};
 	create(A,n);
-	cout<<sum(first);
+	display(first);
 	return 0;
 }
