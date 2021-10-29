@@ -1,13 +1,11 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-
 struct Node
 {
     int data;
     struct Node *left;
     struct Node *right;
 };
-// Utility function to create a new Tree Node
 Node* newNode(int val)
 {
     Node* temp = new Node;
@@ -17,7 +15,6 @@ Node* newNode(int val)
     
     return temp;
 }
-// Function to Build Tree
 Node* buildTree(string str)
 {   
     // Corner Case
@@ -80,57 +77,79 @@ Node* buildTree(string str)
     
     return root;
 }
-
-vector<int> Kdistance(struct Node *root, int k);
+int findCousinSum(Node* root, int key);
 
 int main()
 {
-
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
         int k;
-		scanf("%d ",&k);
+        scanf("%d ",&k);
         string s;
 		getline(cin,s);
-        Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
-    }
-    return 1;
-}// } Driver Code Ends
+		Node* root = buildTree(s);
+        cout<<findCousinSum(root,k)<<endl;
+  }
+  return 0;
+}
+// } Driver Code Ends
 
 
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
-struct Node
-{
-    int data;
-    Node* left;
-    Node* right;
-}; */
+//User function Template for C++
 
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
+int findCousinSum(Node* root, int key) 
+{ 
     if(root==NULL)
     {
-        return ;
+        return 0;
     }
-    if(k==0)
+    if(root->data==key)
     {
-        ans.push_back(root->data);
+        return -1;
     }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
-}
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
+    int currSum = 0;
+    int size;
+    queue<Node*> q;
+    q.push(root);
+    bool found = false;
+    while (!q.empty()) 
+    {
+        if (found == true) 
+        {
+            return currSum;
+        }
+        size = q.size();
+        currSum = 0;
+ 
+        while (size) 
+        {
+            root = q.front();
+            q.pop();
+            if ((root->left && root->left->data == key)
+                || (root->right && root->right->data == key)) 
+            {
+                found = true;
+            }
+            else 
+            {
+                if (root->left) 
+                {
+                    currSum += root->left->data;
+                    q.push(root->left);
+                }
+ 
+                if (root->right) 
+                {
+                    currSum += root->right->data;
+                    q.push(root->right);
+                }
+            }
+ 
+            size--;
+        }
+    }
+ 
+    return -1;
 }

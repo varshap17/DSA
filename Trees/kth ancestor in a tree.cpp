@@ -7,7 +7,6 @@ struct Node
     struct Node *left;
     struct Node *right;
 };
-// Utility function to create a new Tree Node
 Node* newNode(int val)
 {
     Node* temp = new Node;
@@ -17,7 +16,6 @@ Node* newNode(int val)
     
     return temp;
 }
-// Function to Build Tree
 Node* buildTree(string str)
 {   
     // Corner Case
@@ -80,57 +78,58 @@ Node* buildTree(string str)
     
     return root;
 }
-
-vector<int> Kdistance(struct Node *root, int k);
+int kthAncestor(Node *root, int k, int node);
 
 int main()
 {
-
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
-        int k;
-		scanf("%d ",&k);
+        int k , node;
+        scanf("%d ",&k);
+        scanf("%d ",&node);
         string s;
 		getline(cin,s);
-        Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
+		Node* root = buildTree(s);
+		cout<<kthAncestor(root,k,node)<<endl;
     }
-    return 1;
-}// } Driver Code Ends
+    return 0;
+}
+// } Driver Code Ends
 
 
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
+//User function Template for C++
+/*
+Structure of the node of the binary tree is as
 struct Node
 {
-    int data;
-    Node* left;
-    Node* right;
-}; */
+	int data;
+	struct Node *left, *right;
+};
+*/
+// your task is to complete this function
+int findit(Node *root, vector<int>&m , int n)
+{
+    if(!root)
+    {
+        return 0;
+    }
+    if(n==root->data || findit(root->left,m,n) || findit(root->right,m,n))
+    {
+        m.push_back(root->data);
+        return 1;
+    }
+    return 0;
+}
+int kthAncestor(Node *root, int k, int node)
+{
+    vector<int> m;
+    findit(root,m,node);
+    if(k && k<=m.size()-1)
+    {
+        return m[k];
+    }
+    return -1;
+}
 
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
-}
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}

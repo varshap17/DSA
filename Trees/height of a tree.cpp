@@ -1,3 +1,5 @@
+//Initial template for C++
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -6,17 +8,13 @@ struct Node
     int data;
     struct Node *left;
     struct Node *right;
-};
-// Utility function to create a new Tree Node
-Node* newNode(int val)
-{
-    Node* temp = new Node;
-    temp->data = val;
-    temp->left = NULL;
-    temp->right = NULL;
-    
-    return temp;
-}
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+}; 
+
 // Function to Build Tree
 Node* buildTree(string str)
 {   
@@ -33,7 +31,7 @@ Node* buildTree(string str)
         ip.push_back(str);
         
     // Create the root of the tree
-    Node* root = newNode(stoi(ip[0]));
+    Node *root = new Node(stoi(ip[0]));
         
     // Push the root to the queue
     queue<Node*> queue;
@@ -52,9 +50,9 @@ Node* buildTree(string str)
             
         // If the left child is not null
         if(currVal != "N") {
-                
-            // Create the left child for the current node
-            currNode->left = newNode(stoi(currVal));
+
+            // Create the left child for the current Node
+            currNode->left = new Node(stoi(currVal));
                 
             // Push it to the queue
             queue.push(currNode->left);
@@ -70,7 +68,7 @@ Node* buildTree(string str)
         if(currVal != "N") {
                 
             // Create the right child for the current node
-            currNode->right = newNode(stoi(currVal));
+            currNode->right = new Node(stoi(currVal));
                 
             // Push it to the queue
             queue.push(currNode->right);
@@ -81,56 +79,51 @@ Node* buildTree(string str)
     return root;
 }
 
-vector<int> Kdistance(struct Node *root, int k);
+ // } Driver Code Ends
+//User function template for C++
 
+/*
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+*/
+class Solution{
+    public:
+    //Function to find the height of a binary tree.
+    int height(struct Node* node)
+    {
+        if(node==NULL)
+        {
+            return INT_MIN;
+        }
+        if(node->right==NULL && node->left==NULL)
+        {
+            return 1;
+        }
+        return 1+max(height(node->left),height(node->right));
+    }
+};
+
+// { Driver Code Starts.
 int main()
 {
-
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
-        int k;
-		scanf("%d ",&k);
-        string s;
-		getline(cin,s);
-        Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
+        string treeString;
+		getline(cin,treeString);
+		Node* root = buildTree(treeString);
+        Solution ob;
+		cout<<ob.height(root)<<endl;
     }
-    return 1;
-}// } Driver Code Ends
-
-
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
-struct Node
-{
-    int data;
-    Node* left;
-    Node* right;
-}; */
-
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
-}
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}
+    return 0;
+}  // } Driver Code Ends

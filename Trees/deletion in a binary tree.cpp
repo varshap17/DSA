@@ -7,7 +7,6 @@ struct Node
     struct Node *left;
     struct Node *right;
 };
-// Utility function to create a new Tree Node
 Node* newNode(int val)
 {
     Node* temp = new Node;
@@ -17,7 +16,6 @@ Node* newNode(int val)
     
     return temp;
 }
-// Function to Build Tree
 Node* buildTree(string str)
 {   
     // Corner Case
@@ -80,57 +78,77 @@ Node* buildTree(string str)
     
     return root;
 }
-
-vector<int> Kdistance(struct Node *root, int k);
+struct Node* deletionBT(struct Node* root, int key);
+void inn(Node *node)
+{
+    if(node==NULL)
+        return;
+    
+    inn(node->left);
+    cout<<node->data<<" ";
+    inn(node->right);
+}
 
 int main()
 {
-
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
         int k;
-		scanf("%d ",&k);
+        scanf("%d ",&k);
         string s;
 		getline(cin,s);
-        Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
+		Node* root = buildTree(s);
+		root=deletionBT(root,k);
+		inn(root);
+		cout<<endl;
     }
-    return 1;
-}// } Driver Code Ends
+    return 0;
+}
+// } Driver Code Ends
 
 
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
+/*
+Structre of the node of the tree is as
 struct Node
 {
-    int data;
-    Node* left;
-    Node* right;
-}; */
+	int data;
+	Node* left, *right;
+};
+*/
+// you are required to complete this function
+struct Node* deletionBT(struct Node* root, int key)
+{
+    queue <Node*> q;
+    q.push(root);
+    struct Node *temp;
+    struct Node *del,*last,*lastchild;
+    while(!q.empty())
+    {
+        int n=q.size();
+        for(int i=0;i<n;i++)
+        {
+            temp=q.front();
+            q.pop();
+            if(temp->data==key)
+            {
+                del=temp;
+            }
+            if(temp->left)
+            {
+                last=temp;
+                q.push(temp->left);
+            }
+            if(temp->right)
+            {
+                last=temp;
+                q.push(temp->right);
+            }
+        }
+    }
+    del->data=temp->data;
+    last->right==temp? last->right=NULL : last->left=NULL;
+    return root;
+}
 
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
-}
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}

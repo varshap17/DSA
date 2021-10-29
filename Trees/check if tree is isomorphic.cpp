@@ -1,23 +1,13 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-struct Node
-{
+struct Node {
     int data;
-    struct Node *left;
-    struct Node *right;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
 };
-// Utility function to create a new Tree Node
-Node* newNode(int val)
-{
-    Node* temp = new Node;
-    temp->data = val;
-    temp->left = NULL;
-    temp->right = NULL;
-    
-    return temp;
-}
-// Function to Build Tree
 Node* buildTree(string str)
 {   
     // Corner Case
@@ -33,7 +23,7 @@ Node* buildTree(string str)
         ip.push_back(str);
         
     // Create the root of the tree
-    Node* root = newNode(stoi(ip[0]));
+    Node* root = new Node(stoi(ip[0]));
         
     // Push the root to the queue
     queue<Node*> queue;
@@ -54,7 +44,7 @@ Node* buildTree(string str)
         if(currVal != "N") {
                 
             // Create the left child for the current node
-            currNode->left = newNode(stoi(currVal));
+            currNode->left = new Node(stoi(currVal));
                 
             // Push it to the queue
             queue.push(currNode->left);
@@ -70,7 +60,7 @@ Node* buildTree(string str)
         if(currVal != "N") {
                 
             // Create the right child for the current node
-            currNode->right = newNode(stoi(currVal));
+            currNode->right = new Node(stoi(currVal));
                 
             // Push it to the queue
             queue.push(currNode->right);
@@ -81,56 +71,67 @@ Node* buildTree(string str)
     return root;
 }
 
-vector<int> Kdistance(struct Node *root, int k);
+
+ // } Driver Code Ends
+/*Complete the function below
+Node is as follows:
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution{
+  public:
+    // Return True if the given trees are isomotphic. Else return False.
+    bool isIsomorphic(Node *root1,Node *root2)
+    {
+        if(root1==NULL && root2==NULL)
+        {
+            return true;
+        }
+        if(root1==NULL || root2==NULL)
+        {
+            return false;
+        }
+        if(root1->data!=root2->data)
+        {
+            return false;
+        }
+        if((isIsomorphic(root1->left,root2->left) && isIsomorphic(root1->right,root2->right))
+         || (isIsomorphic(root1->left,root2->right) && isIsomorphic(root1->right,root2->left)))
+        {
+            return true;
+        }
+        return false;
+    }
+};
+
+// { Driver Code Starts.
 
 int main()
 {
-
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
-        int k;
-		scanf("%d ",&k);
-        string s;
-		getline(cin,s);
-        Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
+        string s1,s2;
+		getline(cin,s1);
+		getline(cin,s2);
+		Node* root1 = buildTree(s1);
+		Node* root2 = buildTree(s2);
+		Solution obj;
+		if(obj.isIsomorphic(root1,root2))
+		    cout<<"Yes"<<endl;
+		else
+		    cout<<"No"<<endl;
     }
-    return 1;
-}// } Driver Code Ends
-
-
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
-struct Node
-{
-    int data;
-    Node* left;
-    Node* right;
-}; */
-
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
+    return 0;
 }
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}
+  // } Driver Code Ends

@@ -81,7 +81,56 @@ Node* buildTree(string str)
     return root;
 }
 
-vector<int> Kdistance(struct Node *root, int k);
+
+ // } Driver Code Ends
+/*  Tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+// Should return true if tree is Sum Tree, else false
+class Solution
+{
+    public:
+    int sum(Node* root)
+    {
+        if(root==NULL)
+        {
+            return 0;
+        }
+        if(root->left==NULL && root->right==NULL)
+        {
+            return root->data;
+        }
+        else
+        {
+            if(root->data==sum(root->left)+sum(root->right))
+            {
+                return 2*root->data;
+            }
+        }
+    }
+    
+    bool isSumTree(Node* root)
+    {
+        if(root->left==NULL && root->right==NULL)
+        {
+            return true;
+        }
+        if(root->data==sum(root)/2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+};
+
+// { Driver Code Starts.
 
 int main()
 {
@@ -90,47 +139,11 @@ int main()
 	scanf("%d ",&t);
     while(t--)
     {
-        int k;
-		scanf("%d ",&k);
         string s;
 		getline(cin,s);
         Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
+        Solution ob;
+        cout <<ob.isSumTree(root) << endl;
     }
     return 1;
-}// } Driver Code Ends
-
-
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
-struct Node
-{
-    int data;
-    Node* left;
-    Node* right;
-}; */
-
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
-}
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}
+}  // } Driver Code Ends

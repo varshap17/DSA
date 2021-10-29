@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 
 struct Node
 {
@@ -7,7 +5,6 @@ struct Node
     struct Node *left;
     struct Node *right;
 };
-// Utility function to create a new Tree Node
 Node* newNode(int val)
 {
     Node* temp = new Node;
@@ -17,7 +14,6 @@ Node* newNode(int val)
     
     return temp;
 }
-// Function to Build Tree
 Node* buildTree(string str)
 {   
     // Corner Case
@@ -80,33 +76,28 @@ Node* buildTree(string str)
     
     return root;
 }
-
-vector<int> Kdistance(struct Node *root, int k);
+int countLeaves(struct Node* root);
 
 int main()
 {
-
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
-        int k;
-		scanf("%d ",&k);
         string s;
 		getline(cin,s);
-        Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
-        cout<<endl;
+		Node* root = buildTree(s);
+		cout<< countLeaves(root)<<endl;
     }
-    return 1;
-}// } Driver Code Ends
+    return 0;
+}
+// } Driver Code Ends
 
+
+//User function Template for C++
 
 /* A binary tree node has data, pointer to left child
-   and a pointer to right child /
+   and a pointer to right child  
 struct Node
 {
     int data;
@@ -114,23 +105,21 @@ struct Node
     Node* right;
 }; */
 
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
+/* Should return count of leaves. For example, return
+    value should be 2 for following tree.
+         10
+      /      \ 
+   20       30 */
+int countLeaves(Node* root)
 {
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
+  if(root==NULL)
+  {
+      return 0;
+  }
+  if(root->left==NULL && root->right==NULL)
+  {
+      return 1;
+  }
+  return countLeaves(root->left)+countLeaves(root->right);
 }
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}
+

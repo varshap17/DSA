@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 struct Node
 {
     int data;
@@ -81,56 +80,53 @@ Node* buildTree(string str)
     return root;
 }
 
-vector<int> Kdistance(struct Node *root, int k);
 
-int main()
+ // } Driver Code Ends
+/*Complete the function below
+Node is as follows:
+struct Node{
+int data;
+Node *left,*right;
+};
+*/
+class Solution{
+  public:
+  void versum(Node *root,int h, map<int,int>&n)
+  {
+      if(root)
+      {
+          n[h]+=root->data;
+          versum(root->left,h-1,n);
+          versum(root->right,h+1,n);
+      }
+  }
+    vector <int> verticalSum(Node *root) 
+    {
+        vector<int> m;
+        map<int,int>n;
+        versum(root,0,n);
+        for(auto x:n)
+        {
+            m.push_back(x.second);
+        }
+        return m;
+    }
+};
+
+// { Driver Code Starts.
+int main() 
 {
-
+    
     int t;
 	scanf("%d ",&t);
     while(t--)
     {
-        int k;
-		scanf("%d ",&k);
         string s;
 		getline(cin,s);
         Node* root = buildTree(s);
-        vector<int> vec = Kdistance(root, k);
-        for(int i = 0;i<vec.size();i++){
-            cout<<vec[i]<<" ";
-        }
+        Solution obj;
+        vector <int> res = obj.verticalSum(root);
+        for (int i : res) cout << i << " ";
         cout<<endl;
     }
-    return 1;
-}// } Driver Code Ends
-
-
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child /
-struct Node
-{
-    int data;
-    Node* left;
-    Node* right;
-}; */
-
-// function should print the nodes at k distance from root
-void put(Node *root,int k,vector<int> &ans)
-{
-    if(root==NULL)
-    {
-        return ;
-    }
-    if(k==0)
-    {
-        ans.push_back(root->data);
-    }
-    put(root->left,k-1,ans);
-    put(root->right,k-1,ans);
-}
-vector<int> Kdistance(struct Node *root, int k)
-{
-    vector<int> ans;
-    put(root,k,ans);
-    return ans;
-}
+}  // } Driver Code Ends
