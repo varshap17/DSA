@@ -1,19 +1,20 @@
 #include<iostream>
 using namespace std;
 
-int c(int n,int r)
+int factorial(int n)
 {
-	if(r==0 | n==r)
+	if(n==0)
 	{
 		return 1;
 	}
 	else
 	{
-		return c(n-1,r-1)+c(n-1,r);
+		return factorial(n-1)*n;
 	}
 }
 int main()
 {
-	cout<<c(10,5);
+	int n=5;
+	cout<<factorial(n);
 	return 0;
 }

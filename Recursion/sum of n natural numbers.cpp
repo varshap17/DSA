@@ -1,19 +1,20 @@
 #include<iostream>
 using namespace std;
 
-int c(int n,int r)
+int sum(int n)
 {
-	if(r==0 | n==r)
+	if(n==0)
 	{
-		return 1;
+		return 0;
 	}
 	else
 	{
-		return c(n-1,r-1)+c(n-1,r);
+		return sum(n-1)+n;
 	}
 }
 int main()
 {
-	cout<<c(10,5);
+	int n=10;
+	cout<<sum(n);
 	return 0;
 }

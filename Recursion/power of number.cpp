@@ -1,19 +1,21 @@
 #include<iostream>
 using namespace std;
 
-int c(int n,int r)
+int power(int n,int x)
 {
-	if(r==0 | n==r)
+	if(x==0)
 	{
 		return 1;
 	}
 	else
 	{
-		return c(n-1,r-1)+c(n-1,r);
+		return power(n,x-1)*n;
 	}
 }
 int main()
 {
-	cout<<c(10,5);
+	int n=5;
+	int x=4;
+	cout<<power(n,x);
 	return 0;
 }
