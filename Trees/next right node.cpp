@@ -1,4 +1,9 @@
-queue<Node*>q;
+class Solution
+{
+public:
+    Node *nextRight(Node *root, int key)
+    {
+        queue<Node*>q;
        q.push(root);
        Node *ans=NULL;
        while(!q.empty())
@@ -24,3 +29,5 @@ queue<Node*>q;
            return ans;
        }
        return ans;
+    }
+};
